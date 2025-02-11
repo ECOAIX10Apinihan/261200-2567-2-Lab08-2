@@ -49,7 +49,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
         t2.start();
         t3.start();
     }
-    
+
     // Draw House
     static class DrawHouse implements Runnable {
         public void run() {
@@ -70,7 +70,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
             houseTurtle.right(45);
         }
     }
-    
+
     // Draw Tree
     static class DrawTree implements Runnable {
         public void run() {
@@ -101,19 +101,20 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
             treeTurtle.forward(28);
         }
     }
-    
+
     // Draw Pond
     static class DrawPond implements Runnable {
         public void run() {
             Turtle pondTurtle = new Turtle();
             pondTurtle.up();
-            pondTurtle.forward(300);
+            pondTurtle.left(180);
+            pondTurtle.forward(100);
             pondTurtle.down();
             pondTurtle.speed(10);
             pondTurtle.penColor("blue");
             for (int i = 0; i < 36; i++) {
                 pondTurtle.forward(10);
-                pondTurtle.right(10);
+                pondTurtle.left(10);
             }
         }
     }
