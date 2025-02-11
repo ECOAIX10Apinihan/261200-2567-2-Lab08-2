@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.Random;
+
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -48,6 +48,16 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
         t1.start();
         t2.start();
         t3.start();
+    //     // สร้าง thread pool ที่มี 3 thread ลองใช้ดูก่อนน่าสนใจ
+    //     ExecutorService executorService = Executors.newFixedThreadPool(3);
+
+    //     // ส่งงานให้กับ thread pool
+    //     executorService.execute(new DrawHouse());
+    //     executorService.execute(new DrawTree());
+    //     executorService.execute(new DrawPond());
+
+    //     // ปิดการทำงานของ ExecutorService เมื่อทุก task เสร็จ
+    //     executorService.shutdown();
     }
 
     // Draw House
