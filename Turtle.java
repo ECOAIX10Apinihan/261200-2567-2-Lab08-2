@@ -36,85 +36,85 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 @SuppressWarnings("unchecked")
 public class Turtle implements Runnable, ActionListener, MouseListener, MouseMotionListener, KeyListener, ComponentListener, MouseWheelListener
 {
-
     /**
      * Demo program
      *
      * @param a commandline args
      */
-        public static void main(String[] a) {
-        // Create three turtles
-        Turtle turtle1 = new Turtle();
-        Turtle turtle2 = new Turtle();
-        Turtle turtle3 = new Turtle();
-
-        // Set turtle speed
-        double speed = 200; // Assuming speed delay in milliseconds for demonstration
-        turtle1.speed(speed);
-        turtle2.speed(speed);
-        turtle3.speed(speed);
-
-        // Thread pool to execute turtle tasks concurrently
-        ExecutorService executor = Executors.newFixedThreadPool(3);
-
-        executor.execute(() -> drawHouse(turtle1));
-        executor.execute(() -> drawTree(turtle2));
-        executor.execute(() -> drawPond(turtle3));
-
-        executor.shutdown();
+    public static void main(String[] a) {
+        Thread t1 = new Thread(new DrawHouse());
+        Thread t2 = new Thread(new DrawTree());
+        Thread t3 = new Thread(new DrawPond());
+        t1.start();
+        t2.start();
+        t3.start();
     }
-
-    private static void drawHouse(Turtle turtle) {
-        turtle.penColor("black");
-        turtle.forward(100);
-        turtle.right(90);
-        turtle.forward(100);
-        turtle.right(90);
-        turtle.forward(100);
-        turtle.right(90);
-        turtle.forward(100);
-        turtle.right(45);
-        turtle.forward(70);
-        turtle.right(90);
-        turtle.forward(70);
-        turtle.right(135);
+    
+    // Draw House
+    static class DrawHouse implements Runnable {
+        public void run() {
+            Turtle houseTurtle = new Turtle();
+            houseTurtle.speed(10);
+            houseTurtle.penColor("black");
+            houseTurtle.forward(100);
+            houseTurtle.right(90);
+            houseTurtle.forward(100);
+            houseTurtle.right(90);
+            houseTurtle.forward(100);
+            houseTurtle.right(90);
+            houseTurtle.forward(100);
+            houseTurtle.right(45);
+            houseTurtle.forward(70);
+            houseTurtle.right(90);
+            houseTurtle.forward(70);
+            houseTurtle.right(45);
+        }
     }
-
-    private static void drawTree(Turtle turtle) {
-        turtle.up();
-        turtle.forward(150);
-        turtle.down();
-        turtle.penColor("brown");
-        turtle.forward(40);
-        turtle.right(90);
-        turtle.forward(20);
-        turtle.right(90);
-        turtle.forward(10);
-        turtle.left(90);
-        turtle.forward(100);
-        turtle.right(90);
-        turtle.forward(20);
-        turtle.right(90);
-        turtle.forward(100);
-        turtle.left(90);
-        turtle.forward(10);
-        turtle.right(90);
-        turtle.forward(20);
-        turtle.penColor("green");
-        turtle.right(45);
-        turtle.forward(28);
-        turtle.right(90);
-        turtle.forward(28);
+    
+    // Draw Tree
+    static class DrawTree implements Runnable {
+        public void run() {
+            Turtle treeTurtle = new Turtle();
+            treeTurtle.up();
+            treeTurtle.forward(150);
+            treeTurtle.down();
+            treeTurtle.penColor("brown");
+            treeTurtle.forward(40);
+            treeTurtle.right(90);
+            treeTurtle.forward(20);
+            treeTurtle.right(90);
+            treeTurtle.forward(10);
+            treeTurtle.left(90);
+            treeTurtle.forward(100);
+            treeTurtle.right(90);
+            treeTurtle.forward(20);
+            treeTurtle.right(90);
+            treeTurtle.forward(100);
+            treeTurtle.left(90);
+            treeTurtle.forward(10);
+            treeTurtle.right(90);
+            treeTurtle.forward(20);
+            treeTurtle.penColor("green");
+            treeTurtle.right(45);
+            treeTurtle.forward(28);
+            treeTurtle.right(90);
+            treeTurtle.forward(28);
+        }
     }
-
-    private static void drawPond(Turtle turtle) {
-        turtle.up();
-        turtle.forward(300);
-        turtle.down();
-        turtle.penColor("blue");
-        for (int i = 0; i < 36; i++) {
-            turtle.forward(10);
-            turtle.right(10);
+    
+    // Draw Pond
+    static class DrawPond implements Runnable {
+        public void run() {
+            Turtle pondTurtle = new Turtle();
+            pondTurtle.up();
+            pondTurtle.forward(300);
+            pondTurtle.down();
+            pondTurtle.speed(10);
+            pondTurtle.penColor("blue");
+            for (int i = 0; i < 36; i++) {
+                pondTurtle.forward(10);
+                pondTurtle.right(10);
+            }
         }
     }
 
@@ -502,7 +502,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
     private static void drawTurtleIcon()
     {
         byte[] imageData= new byte[]{71,73,70,56,57,97,16,0,16,0,-95,2,0,0,-103,
-                0,0,-1,0,-1,-1,-1,-1,-1,33,-7,4,1,10,0,2,0,44,0,0,0,0,16,0,16,0,
+                0,0,-1,0,-1,-1,-1,-1,33,-7,4,1,10,0,2,0,44,0,0,0,0,16,0,16,0,
                 0,2,44,-108,-113,-87,-53,-19,-33,-128,4,104,74,35,67,-72,34,-21,11,
                 124,27,-90,-107,-109,72,117,-91,-71,110,103,-37,90,-31,-10,-55,-87,
                 122,-34,74,72,-15,17,-56,-127,8,33,5,0,59};
@@ -701,7 +701,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
      *    U U      U U      U U      U U      U U      U U      U U      U U
      *    .-./*)   .-./*)   .-./*)                     .-./*)   .-./*)   .-./*)
      *  _/___\/  _/___\/  _/___\/  STATE MANAGEMENT  _/___\/  _/___\/  _/___\/
-     *    U U      U U      U U                        U U      U U      U U
+     *    U U      U U                        U U      U U      U U
      *    .-./*)   .-./*)   .-./*)   .-./*)   .-./*)   .-./*)   .-./*)   .-./*)
      *  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/
      *    U U      U U      U U      U U      U U      U U      U U      U U
@@ -984,7 +984,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
      *    U U      U U      U U      U U      U U      U U      U U      U U
      *    .-./*)   .-./*)   .-./*)                     .-./*)   .-./*)   .-./*)
      *  _/___\/  _/___\/  _/___\/   TURTLE METHODS   _/___\/  _/___\/  _/___\/
-     *    U U      U U      U U                        U U      U U      U U
+     *    U U      U U                        U U      U U      U U      U U
      *    .-./*)   .-./*)   .-./*)   .-./*)   .-./*)   .-./*)   .-./*)   .-./*)
      *  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/  _/___\/
      *    U U      U U      U U      U U      U U      U U      U U      U U
