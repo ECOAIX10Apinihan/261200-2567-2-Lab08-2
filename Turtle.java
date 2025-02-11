@@ -21,6 +21,9 @@ import java.awt.image.*;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -39,168 +42,80 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
      *
      * @param a commandline args
      */
-    public static void main(String[] a)
-    {
-        Turtle bob = new Turtle();
-        
-        //bob.penColor("black");
-        //bob.width(5);
-        //bob.speed(0.1);
-        //bob.forward(60);    // move 30 units (pen down = draw a line)
-        //bob.left(90);       // turn left for 90 degrees
-        //bob.up();           // pick pen (tail) up   
-        //bob.forward(80);    // move 40 units (pen up = no drawing)
-        //bob.penColor("green"); // change pen color
-        //bob.down();         // put pen (tail) down (so it's ready to draw)
-        //bob.right(216.87);  // turn right for 216.87 degrees
-        //bob.forward(100);     // move 50 units (pen down = draw a line)
-        
-        //bob.up();
-        //bob.forward(150);   
-        //bob.right(143.14);
-        //bob.down();
-        
-        // random things
-         //bob.penColor("blue");
-        //for(int i=0;i<250;i++) {
-            //bob.forward(i/25.);
-            //bob.width(i*0.1);
-            //bob.left(5);
-            //if(i%10==0)
-                //bob.dot("red",i*0.2);
-        //}
+        public static void main(String[] a) {
+        // Create three turtles
+        Turtle turtle1 = new Turtle();
+        Turtle turtle2 = new Turtle();
+        Turtle turtle3 = new Turtle();
 
-        //kathong top view
-        //create base kathong iron part
-        bob.penColor("black");
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(135);
-        bob.penColor("red");
-        bob.forward(144);
-        bob.left(135);
-        bob.up();
-        bob.forward(100);
-        bob.left(135);
-        bob.down();
-        bob.forward(144);
-        bob.right(45);
+        // Set turtle speed
+        double speed = 200; // Assuming speed delay in milliseconds for demonstration
+        turtle1.speed(speed);
+        turtle2.speed(speed);
+        turtle3.speed(speed);
 
-        bob.penColor("black");
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(135);
-        bob.penColor("red");
-        bob.forward(144);
-        bob.left(135);
-        bob.up();
-        bob.forward(100);
-        bob.left(135);
-        bob.down();
-        bob.forward(144);
-        
-        bob.left(45);
-        bob.penColor("black");
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(135);
-        bob.penColor("red");
-        bob.forward(144);
-        bob.left(135);
-        bob.up();
-        bob.forward(100);
-        bob.left(135);
-        bob.down();
-        bob.forward(144);
-        
-        bob.right(135);
-        bob.up();
-        bob.forward(100);
+        // Thread pool to execute turtle tasks concurrently
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
-        bob.down();
-        bob.penColor("black");
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(90);
-        bob.forward(100);
-        bob.right(135);
-        bob.penColor("red");
-        bob.forward(144);
-        bob.left(135);
-        bob.up();
-        bob.forward(100);
-        bob.left(135);
-        bob.down();
-        bob.forward(144);
-        bob.right(45);
-        
-        //create base kathong candle red platform part
-        bob.up();
-        bob.home();
-        bob.down();
-        for(int i=0;i<100;i++) {
-            bob.width(5);
-            bob.forward(i);
-            bob.left(90);
+        executor.execute(() -> drawHouse(turtle1));
+        executor.execute(() -> drawTree(turtle2));
+        executor.execute(() -> drawPond(turtle3));
+
+        executor.shutdown();
+    }
+
+    private static void drawHouse(Turtle turtle) {
+        turtle.penColor("black");
+        turtle.forward(100);
+        turtle.right(90);
+        turtle.forward(100);
+        turtle.right(90);
+        turtle.forward(100);
+        turtle.right(90);
+        turtle.forward(100);
+        turtle.right(45);
+        turtle.forward(70);
+        turtle.right(90);
+        turtle.forward(70);
+        turtle.right(135);
+    }
+
+    private static void drawTree(Turtle turtle) {
+        turtle.up();
+        turtle.forward(150);
+        turtle.down();
+        turtle.penColor("brown");
+        turtle.forward(40);
+        turtle.right(90);
+        turtle.forward(20);
+        turtle.right(90);
+        turtle.forward(10);
+        turtle.left(90);
+        turtle.forward(100);
+        turtle.right(90);
+        turtle.forward(20);
+        turtle.right(90);
+        turtle.forward(100);
+        turtle.left(90);
+        turtle.forward(10);
+        turtle.right(90);
+        turtle.forward(20);
+        turtle.penColor("green");
+        turtle.right(45);
+        turtle.forward(28);
+        turtle.right(90);
+        turtle.forward(28);
+    }
+
+    private static void drawPond(Turtle turtle) {
+        turtle.up();
+        turtle.forward(300);
+        turtle.down();
+        turtle.penColor("blue");
+        for (int i = 0; i < 36; i++) {
+            turtle.forward(10);
+            turtle.right(10);
         }
-        bob.home();
-        bob.penColor("yellow");
-        for(int i=0;i<30;i++) {
-            bob.width(8);
-            bob.forward(i);
-            bob.left(90);
-        }
-        // set orgin
-        bob.down();
-        bob.home();
-        bob.up();
-        
-        //create base baithong flower  part
-        bob.right(90);
-        bob.forward(120);
-        bob.up();
-        bob.home();
-        bob.left(90);
-        bob.forward(100);
-        bob.left(90);
-        bob.forward(50);
-        bob.right(90);
-        bob.forward(25);
-        bob.right(90);
-        bob.down();
-        for (int i = 0; i < 8; i++) {
-            bob.penColor("green");
-            bob.width(60);
-            bob.forward(100);
-            bob.right(45);
-        }
-        for (int i = 0; i < 8; i++) {
-            bob.penColor("pink");
-            bob.width(30);
-            bob.forward(100);
-            bob.right(45);
-        }
-        // set bob turtle to pramaekongka /O_O
-        bob.up();
-        bob.home();
     }
 
     // ========================= Don't modify the code after this point! ========================= //
@@ -587,7 +502,7 @@ public class Turtle implements Runnable, ActionListener, MouseListener, MouseMot
     private static void drawTurtleIcon()
     {
         byte[] imageData= new byte[]{71,73,70,56,57,97,16,0,16,0,-95,2,0,0,-103,
-                0,0,-1,0,-1,-1,-1,-1,-1,-1,33,-7,4,1,10,0,2,0,44,0,0,0,0,16,0,16,0,
+                0,0,-1,0,-1,-1,-1,-1,-1,33,-7,4,1,10,0,2,0,44,0,0,0,0,16,0,16,0,
                 0,2,44,-108,-113,-87,-53,-19,-33,-128,4,104,74,35,67,-72,34,-21,11,
                 124,27,-90,-107,-109,72,117,-91,-71,110,103,-37,90,-31,-10,-55,-87,
                 122,-34,74,72,-15,17,-56,-127,8,33,5,0,59};
